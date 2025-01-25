@@ -28,6 +28,7 @@ SECRET_KEY = 'j!05hkuv_xx^04$%1rgmt#mh5_&*lgc0s7)ac8)0(=$s2byqm^'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+STATICFILES_DIRS = [STATIC_DIR, ]
 
 
 # Application definition
@@ -59,7 +60,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [TEMPLATE_DIR, ],
-        'STATICFILES_DIRS' = [STATIC_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
