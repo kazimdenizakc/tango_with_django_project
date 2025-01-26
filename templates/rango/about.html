@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Rango</title>
-</head>
-<body>
+{% load static %}
+<html> 
+  <head>
+    <title>Rango</title> 
+  </head>
+
+  <body>
+
     <h1>Rango says...</h1>
     <p>here is the about page.</p>
-</body>
+
+ 
+    <div>
+      <a href="{/rango/index/}">Index</a><br />
+      <img src="/static/images/rango.jpg" alt="Picture of Rango" />
+    </div>
+
+
+    <p>This tutorial has been put together by <strong>Kazim Akcadag</strong>.</p>
+
+    <div>
+      <img src="/media/cat.jpg" alt="Picture of a Cat" />
+    </div>
+  </body>
 </html>
