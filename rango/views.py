@@ -11,5 +11,5 @@ def index(request):
   return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
-  return render(request, 'rango/about.html', context=context_dict)
+  return render(request, 'rango/about.html')
 
