@@ -8,19 +8,18 @@
   <body>
 
     <h1>Rango says...</h1>
-    <p>here is the about page.</p>
+    <p>Here is the about page.</p>
 
- 
     <div>
-      <a href="/rango/index/">Index</a>
-      <img src="/static/images/rango.jpg" alt="Picture of Rango" />
+      <a href="{% url 'rango:index' %}">Index</a>
+      <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
     </div>
-
 
     <p>This tutorial has been put together by <strong>Kazim Akcadag</strong>.</p>
 
     <div>
       <img src="/media/cat.jpg" alt="Picture of a Cat" />
     </div>
+
   </body>
 </html>
