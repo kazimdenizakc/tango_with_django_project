@@ -10,22 +10,21 @@ from rango.models import Category, Page
 
 def populate():
     python_pages = [
-        {'title': 'Official Python Tutorial', 'url': 'http://docs.python.org/3/tutorial/', 'views': 50},
-        {'title': 'How to Think like a Computer Scientist', 'url': 'http://www.greenteapress.com/thinkpython/', 'views': 40},
-        {'title': 'Learn Python in 10 Minutes', 'url': 'http://www.korokithakis.net/tutorials/python/', 'views': 38}
+        {"title": "Official Python Tutorial", "url": "http://docs.python.org/3/tutorial/", "views": 100},
+        {"title": "How to Think like a Computer Scientist", "url": "http://www.greenteapress.com/thinkpython/", "views": 50},
+        {"title": "Learn Python in 10 Minutes", "url": "http://www.korokithakis.net/tutorials/python/", "views": 75},
     ]
 
     django_pages = [
-        {'title': 'Official Django Tutorial', 'url': 'https://docs.djangoproject.com/en/2.1/intro/tutorial01/', 'views': 30},
-        {'title': 'Django Rocks', 'url': 'http://www.djangorocks.com/', 'views': 25},
-        {'title': 'How to Tango with Django', 'url': 'http://www.tangowithdjango.com/', 'views': 20}
+        {"title": "Official Django Tutorial", "url": "https://docs.djangoproject.com/en/4.2/intro/tutorial01/", "views": 200},
+        {"title": "Django Rocks", "url": "http://www.djangorocks.com/", "views": 30},
+        {"title": "How to Tango with Django", "url": "http://www.tangowithdjango.com/", "views": 90},
     ]
 
     other_pages = [
-        {'title': 'Bottle', 'url': 'http://bottlepy.org/docs/dev/', 'views': 15},
-        {'title': 'Flask', 'url': 'http://flask.pocoo.org', 'views': 12}
+        {"title": "Bottle", "url": "http://bottlepy.org/docs/dev/", "views": 40},
+        {"title": "Flask", "url": "http://flask.pocoo.org", "views": 60},
     ]
-
     cats = {
         'Python': {'pages': python_pages, 'views': 128, 'likes': 64},
         'Django': {'pages': django_pages, 'views': 64, 'likes': 32},
@@ -42,10 +41,9 @@ def populate():
         print(f'Category: {c.name} (Views: {c.views}, Likes: {c.likes})')
         for p in Page.objects.filter(category=c):
             print(f'  - {p.title} (Views: {p.views})')
-
-
+    
 def add_page(cat, title, url, views=0):
-    p, created = Page.objects.get_or_create(category=cat, title=title)
+    p = Page.objects.get_or_create(category=cat, title=title)[0]
     p.url = url
     p.views = views
     p.save()
