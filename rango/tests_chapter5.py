@@ -4,7 +4,7 @@
 # With assistance from Enzo Roiz (https://github.com/enzoroiz)
 # 
 # Chapter 5 -- Models and Databases
-# Last updated: October 3rd, 2019
+# Last updated: October 3rd, 2019.
 # Revising Author: David Maxwell
 # 
 
