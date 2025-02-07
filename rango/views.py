@@ -3,6 +3,8 @@ from django.urls import reverse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
 from rango.forms import UserForm, UserProfileForm
+from django.contrib.auth import authenticate, login 
+from django.http import HttpResponse
 
 def index(request):
     # Query the top 5 categories by likes
@@ -111,6 +113,25 @@ def register(request):
                 context = {'user_form': user_form,
                             'profile_form': profile_form,
                             'registered': registered})
+
+def user_login(request):
+    if request.method == 'POST':
+      username = request.POST.get('username')
+      password = request.POST.get('password')
+      user = authenticate(username=username, password=password)
+      if user:
+          if user.is_active:
+            login(request, user)
+            return redirect(reverse('rango:index'))
+          else:
+              return HttpResponse("Your Rango account is disabled.")
+      else:
+        print(f"Invalid login details: {username}, {password}")
+        return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'rango/login.html')
+
+
 
 
           
