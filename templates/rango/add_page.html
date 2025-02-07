@@ -1,35 +1,33 @@
-<!DOCTYPE html>
-<html> 
-    <head>
-        <title>Rango - Add Page</title> 
-    </head>
-    <body>
-        <h1>Add a Page to {{ category.name }}</h1>
+{% extends 'base.html' %}
+{% load static %}
 
-        <div>
-            <form id="page_form" method="post" action="{% url 'rango:add_page' category.slug %}"> 
-                {% csrf_token %}
-                
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-                
-                {% for field in form.visible_fields %}
-                    <p>
-                        {{ field.label_tag }}  
-                        {{ field }}  
-                        <br/>
-                        <small>{{ field.help_text }}</small>
-                        {{ field.errors }}
-                    </p>
-                {% endfor %}
+{% block title_block %}
+    Add a Page
+{% endblock %}
 
-                <input type="submit" name="submit" value="Create Page" /> 
-            </form>
-        </div> 
-        
-        <div>
-            <a href="{% url 'rango:show_category' category.slug %}">Back to {{ category.name }}</a>
-        </div>
-    </body>
-</html>
+{% block body_block %}
+    <h1>Add a Page to {{ category.name }}</h1>
+
+    <div>
+        <form id="page_form" method="post" action="{% url 'rango:add_page' category.slug %}">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                <p>
+                    {{ field.label_tag }}  
+                    {{ field }}  
+                    <br/>
+                    <small>{{ field.help_text }}</small>
+                    {{ field.errors }}
+                </p>
+            {% endfor %}
+            <input type="submit" name="submit" value="Create Page" /> 
+        </form>
+    </div> 
+    
+    <div>
+        <a href="{% url 'rango:show_category' category.slug %}">Back to {{ category.name }}</a>
+    </div>
+{% endblock %}
