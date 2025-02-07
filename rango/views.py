@@ -48,6 +48,7 @@ def show_category(request, category_name_slug):
     # Render the response
     return render(request, 'rango/category.html', context=context_dict)
 
+@login_required
 def add_category(request):
     form = CategoryForm()
 
@@ -62,6 +63,7 @@ def add_category(request):
 
     return render(request, 'rango/add_category.html', {'form': form})
 
+@login_required
 def add_page(request, category_name_slug):
     try:
         # Find the category with the given slug
@@ -144,7 +146,9 @@ def user_logout(request):
   # Take the user back to the homepage.
   return redirect(reverse('rango:index'))
 
-
+@login_required
+def restricted(request):
+    return render(request, 'rango/restricted.html')
 
           
 
