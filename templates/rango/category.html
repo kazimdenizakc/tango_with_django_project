@@ -10,9 +10,7 @@
                 {% if pages %}
                     <ul>
                         {% for page in pages %}
-                            <li>
-                                <a href="{{ page.url }}">{{ page.title }}</a>({{ page.views }} views)
-                            <li>
+                            <li><a href="{{ page.url }}">{{ page.title }}</a><li>
                         {% endfor %}
                     </ul>
                 {% else %}
@@ -25,7 +23,7 @@
 
         <!-- Add the "Back to Index" link here -->
         <div>
-            <a href="{% url 'rango:index' %}">Back to Home</a>
+           <li><a href="{% url 'rango:index' %}">Back to Home</a></li>
         </div>
     </body>
 </html>
