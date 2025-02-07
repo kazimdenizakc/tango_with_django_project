@@ -3,8 +3,10 @@ from django.urls import reverse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
 from rango.forms import UserForm, UserProfileForm
-from django.contrib.auth import authenticate, login 
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     # Query the top 5 categories by likes
@@ -131,6 +133,16 @@ def user_login(request):
     else:
         return render(request, 'rango/login.html')
 
+@login_required
+def restricted(request):
+  return HttpResponse("Since you're logged in, you can see this text!")
+
+@login_required
+def user_logout(request):
+  # Since we know the user is logged in, we can now just log them out.
+  logout(request)
+  # Take the user back to the homepage.
+  return redirect(reverse('rango:index'))
 
 
 
