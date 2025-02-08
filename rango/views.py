@@ -43,11 +43,17 @@ def index(request):
 
 
 def about(request):
-    visitor_cookie_handler(request)  
-    visits = request.session.get('visits', 1)  
-    context_dict = {'visits': visits} 
-    return render(request, 'rango/about.html', context=context_dict)
+    context_dict = {}
 
+    # Handle visit count logic
+    visits = int(request.COOKIES.get('visits', '0'))  # Get the current visit count from cookies
+    visits += 1  # Increment the visit count
+    context_dict['visits'] = visits  # Add the visit count to the context dictionary
+
+    response = render(request, 'rango/about.html', context=context_dict)
+    response.set_cookie('visits', visits)  # Set the updated visit count in the cookie
+
+    return response
 def show_category(request, category_name_slug):
     # Create a context dictionary to pass to the template
     context_dict = {}
