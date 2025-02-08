@@ -6,30 +6,46 @@ from rango.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
+
+def visitor_cookie_handler(request):
+    visits = int(request.session.get('visits', '1'))
+    last_visit_cookie = request.session.get('last_visit', str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
+
+    # If more than a day has passed since the last visit, increment the visit count
+    if (datetime.now() - last_visit_time).days > 0:
+        visits += 1
+        request.session['last_visit'] = str(datetime.now())
+    else:
+        request.session['last_visit'] = last_visit_cookie
+
+    # Store updated visit count in the session
+    request.session['visits'] = visits
+def get_server_side_cookie(request, cookie, default_val=None): 
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val 
+    return val
 
 def index(request):
-    # Query the top 5 categories by likes
-    category_list = Category.objects.order_by('-likes')[:5]
-
-    # Query the top 5 pages by views
+    category_list = Category.objects.order_by('-likes')[:5] 
     page_list = Page.objects.order_by('-views')[:5]
 
-    # Create a context dictionary to pass to the template
-    context_dict = {
-        'boldmessage': 'Crunchy, creamy, cookie, candy, cupcake!',
-        'categories': category_list,
-        'pages': page_list,
-    }
+    context_dict = {}
+    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    context_dict['categories'] = category_list
+    context_dict['pages'] = page_list
+    
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    
+    response = render(request, 'rango/index.html', context=context_dict) 
+    return response
 
-    request.session.set_test_cookie()
-    # Return a rendered response to send to the client
-    return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
-    if request.session.test_cookie_worked(): 
-        print("TEST COOKIE WORKED!") 
-        request.session.delete_test_cookie()
     return render(request, 'rango/about.html',{})
 
 def show_category(request, category_name_slug):
