@@ -39,14 +39,14 @@ def index(request):
     context_dict['pages'] = page_list
     
     visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
-    
-    response = render(request, 'rango/index.html', context=context_dict) 
-    return response
+    return render(request, 'rango/index.html', context=context_dict)
 
 
 def about(request):
-    return render(request, 'rango/about.html',{})
+    visitor_cookie_handler(request)  
+    visits = request.session.get('visits', 1)  
+    context_dict = {'visits': visits} 
+    return render(request, 'rango/about.html', context=context_dict)
 
 def show_category(request, category_name_slug):
     # Create a context dictionary to pass to the template
